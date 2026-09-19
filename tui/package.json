@@ -1,0 +1,17 @@
+{
+  "name": "ai-research-tui",
+  "version": "0.1.0",
+  "description": "Interactive Cognitive Terminal TUI with Real-Time Memory & Tooling",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node --test test/**/*.test.js"
+  },
+  "author": "Charles Sullivan",
+  "license": "MIT",
+  "dependencies": {
+    "@sullux/markdown-compiler": "^1.0.1",
+    "@sullux/tui": "file:../../tui",
+    "js-yaml": "^5.4.1"
+  }
+}

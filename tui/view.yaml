@@ -1,0 +1,186 @@
+classes:
+  '@theme.yaml:classes': '*'
+
+layouts:
+  markdown: '@markdown:MarkdownControl'
+
+templates:
+  conversationCard:
+    type: layout
+    direction: vertical
+    class: ':itemClass'
+    margin: { top: 0, bottom: 1 }
+    inner:
+      - type: rich
+        inner:
+          - class: ':selectorClass'
+            text: ':selector'
+          - class: 'timestamp'
+            text: ':timestamp'
+          - class: ':headerClass'
+            text: ':header'
+      - type: markdown
+        class: 'markdownBody'
+        text: ':text'
+
+  streamCard:
+    type: layout
+    direction: vertical
+    class: ':itemClass'
+    margin: { top: 0, bottom: 1 }
+    padding: { top: 0, bottom: 0, left: 1, right: 1 }
+    inner:
+      - type: rich
+        inner:
+          - class: ':selectorClass'
+            text: ':selector'
+          - class: 'timestamp'
+            text: ':timestamp'
+          - class: ':headerClass'
+            text: ':title'
+          - class: 'expandHint'
+            text: ':hint'
+          - class: 'expandAction'
+            text: ':hintAction'
+      - type: markdown
+        class: 'markdownBody'
+        text: ':content'
+
+  planItem:
+    type: text
+    class: ':itemClass'
+    margin: ':margin'
+    text: ':text'
+
+type: layout
+direction: vertical
+width: fill
+height: fill
+bg: '#1a1b26'
+onKeyPreview: '@controller:onGlobalKey'
+onKey: '@controller:onGlobalKey'
+
+inner:
+  # Header Bar
+  - type: border
+    borderStyle: single
+    borderFg: '#3b4261'
+    height: 3
+    inner:
+      - type: layout
+        direction: horizontal
+        width: fill
+        inner:
+          - type: text
+            text: ' SULLUX COGNITIVE ENGINE '
+            bold: true
+            fg: '#7aa2f7'
+          - type: text
+            text: '● Online'
+            fg: '#9ece6a'
+            margin: { left: 2 }
+          - type: text
+            text: '@controller:getStatusText'
+            fg: '#bb9af7'
+            margin: { left: 3 }
+
+  # Main Content Split (3-Column Layout: Conversation + Input | Stream | Plan Stack)
+  - type: layout
+    direction: horizontal
+    height: fill
+    inner:
+      # Left Column: Conversation + Pinned Input Box
+      - type: layout
+        direction: vertical
+        width: '@controller:getConversationWidth'
+        height: fill
+        isVisible: '@controller:isConversationVisible'
+        inner:
+          # Scrollable Conversation Messages
+          - type: border
+            borderStyle: rounded
+            borderFg: '#7aa2f7'
+            height: fill
+            inner:
+              - type: scroll
+                direction: vertical
+                height: fill
+                scroll: '@controller:getConversationScroll'
+                inner:
+                  - type: layout
+                    direction: vertical
+                    inner: '@controller:getConversationNodes'
+
+          # Input Box (Pinned strictly at bottom of Conversation Column)
+          - type: border
+            borderStyle: rounded
+            borderFg: '#e0af68'
+            height: content
+            inner:
+              - type: input
+                id: chatInput
+                wrap: true
+                maxHeight: 6
+                placeholder: 'Type a message or prompt... (Enter to send, Shift+Enter for newline)'
+                placeholderStyle:
+                  fg: '#565f89'
+                  italic: true
+                caret:
+                  mode: invert
+                unfocusedCaret:
+                  bg: '#33384c'
+                  fg: '#a9b1d6'
+                onSubmit: '@controller:onSubmitInput'
+
+      # Middle Column: Live Stream (Telemetry, Thoughts & Tools)
+      - type: layout
+        direction: vertical
+        width: '@controller:getStreamWidth'
+        height: fill
+        margin: '@controller:getStreamMargin'
+        isVisible: '@controller:isStreamVisible'
+        inner:
+          - type: border
+            borderStyle: rounded
+            borderFg: '#bb9af7'
+            height: fill
+            inner:
+              - type: scroll
+                direction: vertical
+                height: fill
+                scroll: '@controller:getStreamScroll'
+                inner:
+                  - type: layout
+                    direction: vertical
+                    inner: '@controller:getStreamNodes'
+
+      # Right Column: Plan Stack & Task Tree
+      - type: layout
+        direction: vertical
+        width: '@controller:getPlanWidth'
+        height: fill
+        margin: '@controller:getPlanMargin'
+        isVisible: '@controller:isPlanVisible'
+        inner:
+          - type: border
+            borderStyle: rounded
+            borderFg: '#9ece6a'
+            height: fill
+            inner:
+              - type: scroll
+                direction: vertical
+                height: fill
+                scroll: '@controller:getPlanScroll'
+                inner:
+                  - type: layout
+                    direction: vertical
+                    inner: '@controller:getPlanNodes'
+
+  # Dynamic Footer Status & Shortcuts Bar
+  - type: layout
+    direction: horizontal
+    height: 1
+    inner:
+      - type: text
+        text: '@controller:getShortcutsText'
+        fg: '#565f89'

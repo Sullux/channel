@@ -1,0 +1,33 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 275 275"
+  width="275"
+  height="275"
+>
+  <!-- Letter C -->
+  <path
+    fill="none"
+    stroke="#606060"
+    stroke-width="20"
+    stroke-linecap="round"
+    d="
+      M 210 50
+      a 105 105 0 1 0 0 175
+    "
+  />
+  <!-- Star -->
+  <path
+    fill="#6040ff"
+    stroke="#6040ff"
+    stroke-width="10"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    d="
+      M 150 85
+      q 0 50 -50 50
+      q 50 0 50 50
+      q 0 -50 50 -50
+      q -50 0 -50 -50
+    "
+  />
+</svg>

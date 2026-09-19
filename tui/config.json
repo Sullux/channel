@@ -1,0 +1,23 @@
+{
+  "modelPath": "../../gemma-4-12B-it-qat-q4_0-unquantized",
+  "memoryDir": "./.memory",
+  "filesystemRoot": "./.agent",
+  "promptPath": "./PROMPT.md",
+  "extraArgs": [
+    "--gpu",
+    "--q4"
+  ],
+  "runtime": {
+    "thinkingBudget": 256,
+    "maxTokens": 4096,
+    "temp": 0.7,
+    "topP": 0.95,
+    "minP": 0.05,
+    "repeatPenalty": 1.1,
+    "repeatLastN": 64,
+    "frequencyPenalty": 0.1,
+    "presencePenalty": 0.1,
+    "qThresh": 0.0,
+    "thinkingGate": true
+  }
+}

@@ -1,0 +1,15 @@
+title: "Channel Inference Engine"
+links:
+  - title: "GitHub"
+    url: "https://github.com/Sullux/channel"
+theme:
+  light:
+    bg: "#ffffff"
+    accent: "#6040ff"
+    codeBg: "#f8fafc"
+  dark:
+    bg: "#121316"
+    accent: "#6040ff"
+    codeBg: "#0a0b0e"
+logo: logo.svg
+favicon: logo.svg

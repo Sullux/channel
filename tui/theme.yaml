@@ -1,0 +1,206 @@
+classes:
+  header:
+    bg: '#1f2335'
+    fg: '#c0caf5'
+    bold: true
+    padding: 0
+
+  panel:
+    borderStyle: rounded
+    borderFg: '#7aa2f7'
+    bg: '#1a1b26'
+    fg: '#c0caf5'
+
+  streamPanel:
+    borderStyle: rounded
+    borderFg: '#bb9af7'
+    bg: '#16161e'
+    fg: '#9aa5ce'
+
+  planPanel:
+    borderStyle: rounded
+    borderFg: '#9ece6a'
+    bg: '#141c18'
+    fg: '#73daca'
+
+  inputBar:
+    borderStyle: rounded
+    borderFg: '#e0af68'
+    bg: '#1f2335'
+    fg: '#c0caf5'
+
+  status:
+    bg: '#1a1b26'
+    fg: '#565f89'
+
+  # Common typography & markers
+  timestamp:
+    fg: '#565f89'
+
+  selectorActive:
+    fg: '#f7768e'
+    bold: true
+
+  selectorInactive:
+    fg: '#565f89'
+
+  expandHint:
+    fg: '#565f89'
+    italic: true
+
+  expandAction:
+    fg: '#e0af68'
+    bold: true
+
+  # Conversation cards & headers
+  userCard:
+    bg: '#162b4d'
+    fg: '#e2e8f0'
+    padding: { top: 0, bottom: 0, left: 2, right: 1 }
+
+  assistantCard:
+    bg: '#132133'
+    fg: '#c0caf5'
+    padding: { top: 0, bottom: 0, left: 1, right: 2 }
+
+  waitingEngineCard:
+    bg: '#1a2333'
+    fg: '#94a3b8'
+    padding: { top: 0, bottom: 0, left: 2, right: 1 }
+
+  waitingUserCard:
+    bg: '#2b2314'
+    fg: '#e0af68'
+    padding: { top: 0, bottom: 0, left: 1, right: 2 }
+
+  inFlightCard:
+    bg: '#1a2333'
+    fg: '#94a3b8'
+    padding: { top: 0, bottom: 0, left: 2, right: 1 }
+
+  userHeader:
+    fg: '#7aa2f7'
+    bold: true
+
+  assistantHeader:
+    fg: '#7dcfff'
+    bold: true
+
+  waitingHeader:
+    fg: '#e0af68'
+    bold: true
+
+  inFlightHeader:
+    fg: '#64748b'
+    bold: true
+
+  cursorMarker:
+    fg: '#7aa2f7'
+    bold: true
+
+  # Stream cards & headers
+  streamThought:
+    bg: '#14141e'
+    fg: '#7a88cf'
+
+  streamThoughtHeader:
+    fg: '#bb9af7'
+    bold: true
+
+  streamToolCall:
+    bg: '#1f1a16'
+    fg: '#ff9e64'
+
+  streamToolCallHeader:
+    fg: '#e0af68'
+    bold: true
+
+  streamToolResult:
+    bg: '#141e18'
+    fg: '#73daca'
+
+  streamToolResultHeader:
+    fg: '#9ece6a'
+    bold: true
+
+  streamUser:
+    bg: '#162b4d'
+    fg: '#e2e8f0'
+
+  streamUserHeader:
+    fg: '#7aa2f7'
+    bold: true
+
+  streamNotice:
+    bg: '#181926'
+    fg: '#c0caf5'
+
+  streamNoticeHeader:
+    fg: '#e0af68'
+    bold: true
+
+  streamDefault:
+    bg: '#151521'
+    fg: '#c0caf5'
+
+  streamDefaultHeader:
+    fg: '#9aa5ce'
+    bold: true
+
+  # Plan items
+  planDone:
+    fg: '#9ece6a'
+    bold: true
+
+  planActive:
+    fg: '#7aa2f7'
+    bold: true
+
+  planStepDone:
+    fg: '#73daca'
+
+  planStepActive:
+    fg: '#e0af68'
+
+  planStepWaiting:
+    fg: '#f7768e'
+
+  planStepDeferred:
+    fg: '#bb9af7'
+
+  planStepDefault:
+    fg: '#9aa5ce'
+
+  planEmpty:
+    fg: '#565f89'
+    italic: true
+
+  # Markdown control styling
+  markdownBody:
+    fg: '#c0caf5'
+    h1:
+      bold: true
+      underline: true
+      fg: '#bb9af7'
+    h2:
+      bold: true
+      fg: '#7dcfff'
+    h3:
+      bold: true
+      italic: true
+      fg: '#7aa2f7'
+    code:
+      bg: '#1f2335'
+      fg: '#ff9e64'
+    codeBlock:
+      bg: '#13141f'
+      fg: '#9ece6a'
+    blockquote:
+      italic: true
+      fg: '#7a88cf'
+    bullet:
+      bold: true
+      fg: '#e0af68'
+    link:
+      underline: true
+      fg: '#7aa2f7'
