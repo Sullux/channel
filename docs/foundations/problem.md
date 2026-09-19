@@ -29,6 +29,14 @@ Modern LLMs, by contrast, are fundamentally **synchronous batch processors**. Th
 * **Full-Duplex Impossibility in Request-Response Paradigms:**
   In real-time voice, security video monitoring, or live log analysis, inputs arrive continuously at fixed intervals. Modern inference engines cannot natively consume asynchronous input vectors into the active KV cache while simultaneously emitting output tokens on the same clock cycle without pipeline stalls.
 
+### The Solution: Continuous Streaming Transduction & Elastic Yielding
+Channel fundamentally redesigns the inference lifecycle from monolithic request-response turns to a continuous, interruptible sensory stream:
+* **Pull-Stream Ingestion:** Sensory data and user inputs are ingested as addressable 512-byte blocks directly into Layer 0, eliminating multi-thousand-token prompt prefill shockwaves.
+* **Elastic Syntactic Unit Gating:** The engine yields execution at natural grammatical resting points (`STOP_ELASTIC_YIELD`), allowing clients to poll external environments, check timers, or handle mid-sentence user barge-in without aborting active cognition.
+* **Canonical Turn Envelope Preservation:** When an interruption arrives mid-stream, Channel automatically seals open model turns with `<turn|>` and transitions into user prefill without KV structural corruption.
+
+For the full specification and sequence diagrams, see [Streaming Transduction](../architecture/streaming.md) and [Physical KV Ring Buffer Geometry](../architecture/ring-buffer.md).
+
 ---
 
 ## 2. The Tool-Use Tax
@@ -49,7 +57,13 @@ $$\text{Text} \longrightarrow \text{Tool Syntax} \longrightarrow \text{Parse Err
   Every tool invocation, retry turn, and raw tool output is permanently appended to the model's KV context. For trivial kernel decisions (e.g., triage routing, checking whether deliberate reasoning is required, or choosing between ACK/Snooze), filling the active KV cache with structural scaffolding accelerates memory saturation and penalizes all future attention steps.
 
 ### The Solution: The Autonomic Reflex Plane
-Channel resolves this tax by separating conscious generative cognition from subconscious reflexes. Using **constrained 1-token logit probes (`OP_PROBE_AUTONOMIC`)**, internal state transitions, task triage, and reasoning gates are evaluated in under 2 milliseconds. Shannon entropy and softmax confidence are computed on the GPU, and the KV clock rolls back in $O(1)$ without polluting conversational context.
+Channel resolves this tax by separating conscious generative cognition from subconscious reflexes:
+* **Sub-Millisecond 1-Token Probes (`OP_PROBE_AUTONOMIC`):** Evaluates discrete candidate token distributions directly on the GPU in **< 2 milliseconds**, completely bypassing generative token decoding.
+* **Shannon Entropy & Softmax Confidence:** Mathematical certainty metrics guide state transitions, task triage, and thinking activation without prompt pollution.
+* **Zero-Context KV Rollback:** Transient probe evaluations execute an $O(1)$ clock rollback (`rollbackClock`), preserving clean conversational context.
+* **Thinking Gate & Depth Capping:** Deliberate reasoning passes are automatically bypassed on simple inputs and dynamically capped at elastic yields once a solution is found.
+
+For architecture details and probe mechanics, see [Autonomic Reflex Plane](../architecture/autonomic.md) and the [Client Implementation Guide](../api/client-guide.md).
 
 ---
 
@@ -69,6 +83,14 @@ Modern LLMs exhibit the opposite pathology: they can maintain massive context wi
   * **Ephemeral Retention:** When the context window ends or a new session starts, all accumulated context is completely wiped. The model has learned nothing.
 * **Static Weight Matrices:**
   During inference, all linear projection weight matrices are strictly read-only. The model cannot consolidate new facts into its associative memory blocks. The only existing way to update knowledge is full fine-tuning or training adapters (LoRA) via costly offline backpropagation pipelines.
+
+### The Solution: Episodic Associative Memory & 2D Givens RoPE Delta Injection
+Channel implements a biologically inspired dual-process memory architecture that enables real-time associative recall without context-stuffing RAG or offline fine-tuning:
+* **Zero-Copy Hippocampal Slabs (`OP_MEM_COMMIT`):** Latent KV activation tensors are captured directly from GPU unified memory (UMA) during high-salience moments and consolidated into a persistent, memory-mapped episodic store.
+* **Subconscious Associative Recall (`OP_MEM_QUERY`):** Incoming activation vectors trigger associative resonance against stored episodic centroids in ~0.05ms without text embedding search or matrix prefill FLOPs.
+* **2D Givens RoPE Delta Re-Rotation:** Retrieved keys are dynamically re-rotated in 2D coordinate space to align historical positional encodings with the current sequence clock, injecting past experiences directly into dedicated recall slots (`3968..4095`).
+
+For mathematical derivations and memory lifecycle mechanics, see [Episodic Memory & Recall](../architecture/memory.md).
 
 ---
 
@@ -90,6 +112,15 @@ Existing attempts to run large models on modest hardware by paging layers from d
   $$\text{Arithmetic Intensity} \approx \frac{2 \times P \text{ FLOPs}}{P \times \text{Bytes\_per\_Param}} \approx 1 \text{ FLOP / Byte}$$
 * **Lack of Predictive Prefetching & Direct I/O:**
   Current runtimes rely on high-level memory allocators that cannot coordinate low-level kernel I/O ring buffers with GPU asynchronous compute queues, leading to massive driver overhead and pipeline bubbles.
+
+### The Solution: Strictly Bounded Ring Geometry & Zero-Copy Snapshots
+Channel addresses the memory-bandwidth wall through structural geometric constraints and unified memory optimization:
+* **Unified 4,096-Slot Ring Geometry:** Bounded physical KV cache allocation across all 48 transformer layers eliminates quadratic memory explosion and out-of-memory crashes. Permanent Tier 1 anchors (`0..N-1`) preserve system directives, while a dynamic sliding FIFO ring manages working context.
+* **Zero-Copy Working State Snapshots (`OP_SNAPSHOT_SAVE` / `LOAD`):** Serializes active KV cache slots to NVMe via 1MB buffered background I/O in ~5ms without stalling active GPU compute.
+* **Sub-100ms Warm Boot:** Restores full conversational state and working memory from disk instantaneously, bypassing the multi-second prompt prefill penalty on process restart.
+* **Pure Symmetric Zero-Centered Q4_0 Compute:** Hardware-tailored for AMD RDNA 3.5 architecture, cutting memory traffic by 75% compared to 16-bit float models while maintaining mathematical alignment with Google's QAT weights.
+
+For the hardware layout and checkpoint subsystem, see [Physical KV Ring Buffer](../architecture/ring-buffer.md) and [Zero-Copy Working Snapshots](../architecture/snapshots.md).
 
 ---
 

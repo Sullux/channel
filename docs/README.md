@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="logo.svg" alt="Channel Logo" width="160" height="160" />
+</p>
+
 # Channel Inference Engine
 
 **Channel** is a continuous streaming inference engine with autonomic reflexes, tailored for the Gemma 4 model family on integrated AMD GPU hardware (RDNA 3.5 / Vulkan Compute).
@@ -11,27 +15,22 @@ Unlike traditional turn-based inference servers (e.g. Ollama, llama.cpp, vLLM) t
 1. **Continuous Streaming Transduction**
    - Ingests raw inputs via addressable 512-byte block pull-streams.
    - Decodes tokens with elastic syntactic unit yielding (`STOP_ELASTIC_YIELD`) at natural punctuation resting points, allowing true mid-stream user barge-in without dropping in-progress thought or response state.
-
 2. **Sub-Millisecond Autonomic Reflexes (`OP_PROBE_AUTONOMIC`)**
    - Bypasses the costly multi-second LLM tool-calling cycle for kernel operations.
    - Evaluates discrete 1-token logit probes directly on the GPU in under 2 milliseconds, extracting Shannon entropy and softmax confidence, followed by instantaneous $O(1)$ KV clock rollback without polluting conversational context.
    - Features the **Thinking Gate** (bypassing deliberate reasoning when simple response certainty is high) and **Adaptive Thinking Depth** (capping thought at elastic yields once a solution is found).
-
 3. **Unified 4,096-Slot Physical KV Ring Buffer**
    - Preserves Tier 1 anchor tokens (system prompt & tool definitions) permanently at slots `0..N-1`.
    - Uses an active dynamic FIFO ring for working conversation context.
    - Dynamically routes slots `3968..4095` for high-speed associative recall without CPU memory copies.
-
 4. **Episodic Associative Memory Subsystem**
    - Zero-copy UMA readback for Hippocampal episodic KV cache commits (`OP_MEM_COMMIT`).
    - 2D Givens RoPE delta re-rotation for seamless episodic memory injection (`OP_MEM_QUERY`) into live attention streams.
    - Continuous salience tracking via attention mass accumulation and Gini coefficient distribution analysis.
-
 5. **Pure Q4_0 Vulkan Compute Pipeline**
    - Hardware-tailored for RDNA 3.5 AMD integrated GPUs using pure symmetric zero-centered Q4_0 linear projections across all layers.
    - Fused QKV, fused SwiGLU MLP, and batch causal attention WGSL/SPIR-V shaders.
    - 4-layer command submission chunking ensuring 100% OS and AMDGPU driver watchdog stability under continuous sustained loads.
-
 6. **Decoupled Dual-Plane Architecture**
    - **Tensor Brainstem (Zig on GPU):** High-speed compute, KV ring maintenance, UMA synchronization, autonomic probes, and raw token streaming.
    - **Cognitive Mind (Host Runtime / TUI on Node.js):** Autonomic finite state machines (A-FSM), channel focus arbitration, task scheduling, VFS storage, and asynchronous subshell/terminal process orchestration.
