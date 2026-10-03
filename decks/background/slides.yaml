@@ -1,0 +1,11 @@
+title: "Channel Inference Engine: Background"
+ratio: "16:9"
+theme: "dark"
+
+slides:
+  - 01-cover.md
+  - 02-intro.md
+  - 03-two-parts.md
+  - 04-model.md
+  - 05-engine.md
+  - 06-engine-and-models.md
