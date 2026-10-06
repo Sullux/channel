@@ -9,3 +9,7 @@ slides:
   - 04-model.md
   - 05-engine.md
   - 06-engine-and-models.md
+  - 07-why-write-a-new-engine.md
+  - 08-existing-engines.md
+  - 09-problem-with-existing-engines.md
+  - 10-final-summary.md
