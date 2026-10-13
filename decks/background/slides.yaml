@@ -1,0 +1,20 @@
+title: "Channel Inference Engine: Background"
+ratio: "16:9"
+theme: "dark"
+
+slides:
+  - 01-cover.md
+  - 02-intro.md
+  - 03-two-parts.md
+  - 04-model.md
+  - 05-engine.md
+  - 06-engine-and-models.md
+  - 07-why-write-a-new-engine.md
+  - 08-existing-engines.md
+  - 09-problem-with-existing-engines.md
+  - 10-one-shot.md
+  - 11-memory.md
+  - 12-learning.md
+  - 13-text.md
+  - 14-summary.md
+  - 15-conclusion.md
